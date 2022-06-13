@@ -4,10 +4,11 @@ import data from '/data.json';
 const createEntry = (props) => {
 	const image = props.user.image.png;
 	const replies = props.replies;
+	const index = props.id;
 
 	return (
 		<Entry
-			key={props.id}
+			key={index}
 			content={props.content}
 			user={props.user.username}
 			score={props.score}

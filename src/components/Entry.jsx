@@ -2,34 +2,29 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Score from './Score';
 
+function createScore(props) {
+	return <Score score={props.score} index={props.index} />;
+}
 function Entry({ key, score, created, content, user, image, replies }) {
 	const [userScore, setUserScore] = useState(score);
-	const [replyPoints, setReplyPoints] = useState(replies.score);
 
-	const addReplyPoints = () => {
-		console.log('added 1');
-		setReplyPoints(30);
-	};
-
-	function subReplyPoints() {
-		console.log('subtracted 1');
-		// setReplyPoints(replies.score--);
+	function add() {
+		setUserScore((prevScore) => prevScore + 1);
+	}
+	function subtract() {
+		setUserScore((prevScore) => prevScore - 1);
 	}
 
 	return (
 		<MainContainer>
-			<Container key={key}>
+			<Container>
 				<CommentContainer>
 					<ScoreWrapper>
-						<button onClick={() => console.log('plus button clicked')}>
-							+
-						</button>
+						<button onClick={add}>+</button>
 						<p>{userScore}</p>
-						<button onClick={() => console.log('minus button clicked')}>
-							-
-						</button>
+						<button onClick={subtract}>-</button>
 					</ScoreWrapper>
-					<CommentWrapper>
+					<CommentWrapper key={key}>
 						<span className="span">
 							<img src={image} alt="profile picture" />
 							<h2>{user}</h2>
@@ -40,20 +35,28 @@ function Entry({ key, score, created, content, user, image, replies }) {
 				</CommentContainer>
 			</Container>
 			{replies &&
-				replies.map((reply) => {
+				replies.map((reply, index) => {
 					return (
-						<ReplyContainer>
-							<Score
-								replyScore={replyPoints}
-								addReplyPoints={addReplyPoints}
-								subReplyPoints={subReplyPoints}
-							/>
-							<span className="span">
-								<img src={reply.user.image.png} alt="profile picture" />
-								<h2>{reply.user.username}</h2>
-								<p>{reply.createdAt}</p>
-							</span>
-							<p>{reply.content}</p>
+						<ReplyContainer key={index}>
+							{createScore(reply)}
+							<ContentWrapper>
+								<div className="profile">
+									<img
+										src={reply.user.image.png}
+										alt="profile picture"
+									/>
+									<h2>{reply.user.username}</h2>
+									<p className="created-at">{reply.createdAt}</p>
+								</div>
+								<div className="content">
+									<p>
+										<span className="reply-to">
+											@{reply.replyingTo}
+										</span>{' '}
+										{reply.content}
+									</p>
+								</div>
+							</ContentWrapper>
 						</ReplyContainer>
 					);
 				})}
@@ -92,11 +95,12 @@ const CommentWrapper = styled.div`
 const CommentContainer = styled.div`
 	display: flex;
 	gap: 2rem;
-	color: green;
 `;
 
 const ReplyContainer = styled.div`
 	padding: 3rem;
+	display: flex;
+	gap: 2rem;
 
 	background-color: hsl(0, 0%, 100%);
 	width: 55%;
@@ -104,8 +108,34 @@ const ReplyContainer = styled.div`
 	margin-right: 20rem;
 	margin-top: 3rem;
 	border-radius: 1.5rem;
+`;
 
-	.span {
+const ContentWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	h2 {
+		color: hsl(212, 24%, 26%);
+	}
+
+	.profile {
 		display: flex;
+		gap: 2rem;
+		align-items: center;
+	}
+
+	.reply-to {
+		color: blue;
+		font-size: 2rem;
+	}
+
+	.created-at {
+		color: hsl(211, 10%, 45%);
+	}
+
+	.content {
+		margin-top: 2rem;
+		color: hsl(211, 10%, 45%);
 	}
 `;
