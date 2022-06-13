@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	justify-content: space-between;
 	font-size: 2.5rem;
-	padding: 1.2rem 0.9rem;
+	padding: 1.9rem 0.9rem;
 	align-items: center;
 	border-radius: 1.2rem;
 

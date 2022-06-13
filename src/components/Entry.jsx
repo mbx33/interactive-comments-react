@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Score from './Score';
 
+import plus from '/images/icon-plus.svg';
+import minus from '/images/icon-minus.svg';
+
 function createScore(props) {
 	return <Score score={props.score} index={props.index} />;
 }
@@ -20,17 +23,19 @@ function Entry({ key, score, created, content, user, image, replies }) {
 			<Container>
 				<CommentContainer>
 					<ScoreWrapper>
-						<button onClick={add}>+</button>
+						<img src={plus} alt="plus symbol" onClick={add} />
 						<p>{userScore}</p>
-						<button onClick={subtract}>-</button>
+						<img src={minus} alt="minus" onClick={subtract} />
 					</ScoreWrapper>
 					<CommentWrapper key={key}>
-						<span className="span">
+						<div className="profile">
 							<img src={image} alt="profile picture" />
 							<h2>{user}</h2>
-							<p>{created}</p>
-						</span>
-						<p>{content}</p>
+							<p className="created-at">{created}</p>
+						</div>
+						<div className="content">
+							<p>{content}</p>
+						</div>
 					</CommentWrapper>
 				</CommentContainer>
 			</Container>
@@ -71,30 +76,67 @@ const MainContainer = styled.div`
 `;
 
 const Container = styled.div`
-	padding: 3rem;
 	background-color: hsl(0, 0%, 100%);
-	height: 30vh;
 	width: 70%;
 	margin: 3rem auto;
 	border-radius: 1.5rem;
-	color: black;
-
-	.span {
-		display: flex;
-	}
 `;
 
 const ScoreWrapper = styled.div`
-	/* background-color: red; */
+	background-color: hsl(223, 19%, 93%);
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	font-size: 2.5rem;
+	padding: 1.5rem 0.9rem;
+	align-items: center;
+	border-radius: 1.2rem;
+
+	img {
+		width: 6rem;
+		cursor: pointer;
+	}
+
+	p {
+		color: hsl(238, 40%, 52%);
+	}
 `;
 
 const CommentWrapper = styled.div`
-	/* background-color: blue; */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	h2 {
+		color: hsl(212, 24%, 26%);
+	}
+
+	.profile {
+		display: flex;
+		gap: 2rem;
+		align-items: center;
+	}
+
+	.reply-to {
+		color: blue;
+		font-size: 2rem;
+	}
+
+	.created-at {
+		color: hsl(211, 10%, 45%);
+	}
+
+	.content {
+		margin-top: 2rem;
+		color: hsl(211, 10%, 45%);
+	}
 `;
 
+//work on this container //////////
 const CommentContainer = styled.div`
 	display: flex;
 	gap: 2rem;
+	padding: 4rem;
 `;
 
 const ReplyContainer = styled.div`
