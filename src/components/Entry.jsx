@@ -76,7 +76,7 @@ const MainContainer = styled.div`
 	font-size: 1.6rem;
 `;
 
-const Container = styled.div`
+export const Container = styled.div`
 	background-color: hsl(0, 0%, 100%);
 	width: 70%;
 	margin: 3rem auto;
