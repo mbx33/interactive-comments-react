@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import Score from './Score';
 
@@ -8,6 +8,7 @@ import minus from '/images/icon-minus.svg';
 function createScore(props) {
 	return <Score score={props.score} index={props.index} />;
 }
+
 function Entry({ key, score, created, content, user, image, replies }) {
 	const [userScore, setUserScore] = useState(score);
 
